@@ -4,8 +4,8 @@
 
 | サーバ | 実行環境 | 役割 |
 |----------------|----------|------|
-| **💻 Pico Controllerサーバ** | PC (Python 3.x) | Gradio UIで入力を受け、コマンドをPico Carサーバへ送信 |
-| **🚜 Pico Carサーバ** | Raspberry Pi Pico WH (MicroPython) | コマンドを受け取り車体を制御 |
+| **💻 Pico Controllerサーバ** | PC (Python 3.13) | Gradio UIで入力を受け、コマンドをPico Carサーバへ送信 |
+| **🚜 Pico Carサーバ** | Raspberry Pi Pico WH (MicroPython) <br> ※ Mockモードの場合はPC上でもCPythonで動作可 | コマンドを受け取り車体を制御 |
 
 Mockモードの場合は、両方ともPC上で動かせます。
 

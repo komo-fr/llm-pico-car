@@ -25,14 +25,17 @@ Gradioで作ったUIから自然言語や画像で指示を入力し、LangChain
     - 車体は市販のPicoカーキット + Raspberry Pi Pico WHを使用
         - 車体キット: [Kitronik Raspberry Pi Pico用 自走ロボットプラットフォーム（バギータイプ）](https://www.switch-science.com/products/8095?srsltid=AfmBOoq3LI2zKqSKydff-7FdRzAaHYW0sY-fLdm2LWPP5Xv9-Ityul-b)
 
-## リポジトリ構成
+## 構成
 
-- `pico` フォルダ **（🚜 Pico Carサーバ）**
-    - RaspberryPi Picoで動かすコード
-    - `pico_controller` からのコマンドを受け取ってPicoカーを動かす
-- `pico_controller` フォルダ **（💻 Pico Controllerサーバ）**
-    - PCで動かすコード
-    - GUIを通してユーザの入力を受け付け、Picoカーにコマンドを送信する
+このプロジェクトは2つのサーバで構成されています。
+
+| サーバ | 実行環境 | 役割 | コード | 
+|----------------|----------|------|----|
+| **💻 Pico Controllerサーバ** | PC (Python 3.13) | Gradio UIで入力を受け、コマンドをPico Carサーバへ送信 | `pico_controller` フォルダ配下 |
+| **🚜 Pico Carサーバ** | Raspberry Pi Pico WH (MicroPython) <br> ※ Mockモードの場合はPC上でもCPythonで動作可 | コマンドを受け取り車体を制御 | `pico` フォルダ配下 |
+
+Mockモードの場合は、両方ともPC上で動かせます。
+
 
 ## 動かし方
 

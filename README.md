@@ -1,7 +1,7 @@
 # LLM Pico Car
 
-音声・画像・テキスト入力でRaspberry Pi Picoカーを動かすデモプロジェクトです。
-Gradioで作ったUIから自然言語や画像で指示を入力し、LangChainを使って「前進」「右に曲がる」などのコマンドに変換して、Picoに送信します。
+音声・画像・テキスト入力でRaspberry Pi Picoカーを動かすデモプロジェクトです。   
+Gradioで作ったUIから自然言語や画像で指示を入力し、LangChainを使ってLLMで「前進」「右に曲がる」などのコマンドに変換して、Picoカーに送信します。
 
 **📌 PyCon JP 2025 ポスター発表をしました**   
 「まっすぐ行って、右！」って言ってラズパイカーを動かしたい 〜生成AI × Raspberry Pi Pico × Gradioの試作メモ〜
@@ -20,7 +20,7 @@ Gradioで作ったUIから自然言語や画像で指示を入力し、LangChain
 ![全体の構成](docs/images/overview.png)
 
 1. **Gradioで作ったWebアプリ:** ユーザが音声やルート画像を入力
-2. **Pico Controllerサーバ（PC）:**  ユーザが入力した音声/画像をLangChainでユーザを「前進」「右折」などを意味するコマンドに変換し、Pico Carサーバに送信
+2. **Pico Controllerサーバ（PC）:**  ユーザが入力した音声/画像をLangChainで「前進」「右折」などを意味するコマンドに変換し、Pico Carサーバに送信
 3. **Pico Carサーバ（Raspberry Pi Pico）:**  Microdotを使ってHTTPサーバを動かし、Wi-Fi経由でコマンドを受信。コマンドに従ってPicoカーを動かす
     - 車体は市販のPicoカーキット + Raspberry Pi Pico WHを使用
         - 車体キット: [Kitronik Raspberry Pi Pico用 自走ロボットプラットフォーム（バギータイプ）](https://www.switch-science.com/products/8095?srsltid=AfmBOoq3LI2zKqSKydff-7FdRzAaHYW0sY-fLdm2LWPP5Xv9-Ityul-b)
@@ -36,8 +36,9 @@ Gradioで作ったUIから自然言語や画像で指示を入力し、LangChain
 
 Mockモードの場合は、両方ともPC上で動かせます。
 
-
 ## 動かし方
+
+※ まだエラー処理が甘かったり、動作が不安定な箇所があります🙏
 
 ### 1. Mockモードで動かす（実機なしで確認）
 

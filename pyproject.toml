@@ -1,0 +1,4 @@
+[tool.ruff]
+line-length = 88
+lint.select = ["C9", "E", "F", "W", "I"]
+exclude = ["venv", ".venv"]

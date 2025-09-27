@@ -6,6 +6,7 @@ Gradioで作ったUIから自然言語や画像で指示を入力し、LangChain
 **📌 PyCon JP 2025 ポスター発表をしました**   
 「まっすぐ行って、右！」って言ってラズパイカーを動かしたい 〜生成AI × Raspberry Pi Pico × Gradioの試作メモ〜
 - 発表概要: https://2025.pycon.jp/ja/timetable/talk/9CD3UW
+- ポスター資料: https://speakerdeck.com/komofr/pyconjp2025-poster
 
 ## デモ動画
 

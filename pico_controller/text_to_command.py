@@ -1,6 +1,7 @@
 import json
 from typing import Dict, List, Literal
 
+from langchain.chat_models import init_chat_model
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langsmith import traceable
@@ -17,14 +18,14 @@ def move(
 
 @traceable(name="text_to_command")
 def text_to_command(text: str) -> List[Dict[str, str | int]]:
-    prompt = ChatPromptTemplate.from_messages(
+    prompt = ChatPromptTemplate(
         [
             ("system", TEXT_TO_COMMAND_PROMPT),
             ("human", "指示: {text}"),
         ]
     )
 
-    llm = ChatOpenAI(model="gpt-4.1", temperature=0)
+    llm = init_chat_model(model="gpt-4.1", temperature=0)
 
     chain = prompt | llm
     result = chain.invoke({"text": text})

@@ -2,6 +2,7 @@ import base64
 import json
 from typing import Dict, List
 
+from langchain.chat_models import init_chat_model
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 from langsmith import traceable
@@ -10,7 +11,7 @@ from prompts.image_to_command import IMAGE_TO_COMMAND_PROMPT
 
 @traceable(name="image_to_command")
 def image_to_command(img_bytes: bytes) -> List[Dict[str, str | int]]:
-    llm = ChatOpenAI(model="gpt-4.1", temperature=0)
+    llm = init_chat_model(model="gpt-4.1", temperature=0)
 
     messages = [
         SystemMessage(content=IMAGE_TO_COMMAND_PROMPT),

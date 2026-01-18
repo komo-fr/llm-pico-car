@@ -4,6 +4,7 @@ import config
 import gradio as gr
 from audio_to_text import transcribe
 from dotenv import load_dotenv
+from i18n import i18n
 from image_to_text import image_to_command
 from langsmith import traceable
 from sender import (
@@ -37,10 +38,10 @@ def handler_audio_input(audio_file):
     send_status(STATUS_AUDIO_TO_TEXT_STARTED)
     success, text = transcribe(audio_file)
     if success:
-        yield text, None, "文字起こし完了", render_lamps(["s", "u", "u"])
+        yield text, None, i18n("transcription_complete"), render_lamps(["s", "u", "u"])
         send_status(STATUS_TEXT_TO_COMMAND_STARTED)
         commands = text_to_command(text)
-        yield text, commands, "コマンド生成完了", render_lamps(["s", "s", "u"])
+        yield text, commands, i18n("command_generation_complete"), render_lamps(["s", "s", "u"])
         response = send_commands(commands)
         status = response.get("status")
         yield text, commands, status, render_lamps(["s"] * 3)
@@ -48,7 +49,7 @@ def handler_audio_input(audio_file):
         yield (
             text,
             None,
-            "文字起こしに失敗しました。終了します",
+            i18n("transcription_failed"),
             render_lamps(["e", "u", "u"]),
         )
 
@@ -116,9 +117,9 @@ def handler_button_image_input(im):
     send_status(STATUS_IMAGE_TO_TEXT_STARTED)
     with open(im["composite"], "rb") as f:
         img_bytes = f.read()
-    yield None, "画像読込完了", render_lamps(["s", "u", "u"])
+    yield None, i18n("image_loaded"), render_lamps(["s", "u", "u"])
     commands = image_to_command(img_bytes)
-    yield commands, "コマンド生成完了", render_lamps(["s", "s", "u"])
+    yield commands, i18n("command_generation_complete"), render_lamps(["s", "s", "u"])
     response = send_commands(commands)
     status = response.get("status")
     yield commands, status, render_lamps(["s"] * 3)
@@ -145,21 +146,21 @@ def launch_gradio():
     with gr.Blocks() as demo:
         with gr.Row(variant="default"):
             with gr.Column(variant="default", scale=1):
-                gr.Markdown("### 📝 🎤 🖼 Pico Controller")
+                gr.Markdown(f"### {i18n('app_title')}")
 
             with gr.Column(variant="default", scale=4):
                 progress_lamps = gr.HTML(
-                    label="処理ランプ", value=render_lamps(["u"] * 3)
+                    label=i18n("progress_lamps_label"), value=render_lamps(["u"] * 3)
                 )
 
-        with gr.Tab("テキスト指示"):
+        with gr.Tab(i18n("tab_text")):
             # 部品の定義
             text_input = gr.Textbox(
-                label="指示を入力", placeholder="前にちょっと進んで、止まって"
+                label=i18n("text_input_label"), placeholder=i18n("text_input_placeholder")
             )
-            text_send_button = gr.Button("送信", variant="primary")
-            text_status_output = gr.Textbox(label="送信ステータス")
-            text_commands_output = gr.JSON(label="生成されたコマンド")
+            text_send_button = gr.Button(i18n("send_button"), variant="primary")
+            text_status_output = gr.Textbox(label=i18n("status_label"))
+            text_commands_output = gr.JSON(label=i18n("commands_label"))
             # クリックイベントの設定
             text_send_button.click(
                 handler_text_input,
@@ -167,18 +168,18 @@ def launch_gradio():
                 outputs=[text_commands_output, text_status_output],
             )
 
-        with gr.Tab("音声指示"):
+        with gr.Tab(i18n("tab_audio")):
             # 部品の定義
             audio_input = gr.Audio(
                 sources=["microphone"], type="filepath", format="wav"
             )
             with gr.Row():
-                audio_send_button = gr.Button("送信", variant="primary")
-                audio_reset_button = gr.Button("リセット", variant="secondary")
+                audio_send_button = gr.Button(i18n("send_button"), variant="primary")
+                audio_reset_button = gr.Button(i18n("reset_button"), variant="secondary")
 
-            audio_transcript_output = gr.Textbox(label="文字起こし結果")
-            audio_status_output = gr.Textbox(label="送信ステータス")
-            audio_commands_output = gr.JSON(label="生成されたコマンド")
+            audio_transcript_output = gr.Textbox(label=i18n("transcript_label"))
+            audio_status_output = gr.Textbox(label=i18n("status_label"))
+            audio_commands_output = gr.JSON(label=i18n("commands_label"))
 
             # クリックイベントの設定
             audio_send_button.click(
@@ -213,7 +214,7 @@ def launch_gradio():
                 ],
             )
 
-        with gr.Tab("画像指示"):
+        with gr.Tab(i18n("tab_image")):
             # 部品の定義
             with gr.Row():
                 image_input = gr.ImageEditor(
@@ -222,10 +223,10 @@ def launch_gradio():
                     format="png",
                     brush=gr.Brush(colors=["black"], default_size=10),
                 )
-                image_send_button = gr.Button("送信", variant="primary")
+                image_send_button = gr.Button(i18n("send_button"), variant="primary")
 
-            image_status_output = gr.Textbox(label="送信ステータス")
-            image_commands_output = gr.JSON(label="生成されたコマンド")
+            image_status_output = gr.Textbox(label=i18n("status_label"))
+            image_commands_output = gr.JSON(label=i18n("commands_label"))
             # クリックイベントの設定
             image_send_button.click(
                 handler_button_image_input,
@@ -233,43 +234,42 @@ def launch_gradio():
                 outputs=[image_commands_output, image_status_output, progress_lamps],
             )
 
-        with gr.Tab("設定"):
+        with gr.Tab(i18n("tab_settings")):
             # 部品の定義
-            gr.Markdown("### Step 1｜現在の設定を読み込む")
+            gr.Markdown(f"### {i18n('settings_step1')}")
             with gr.Row():
-                settings_get_button = gr.Button("現在の設定を取得", variant="primary")
+                settings_get_button = gr.Button(i18n("settings_get_button"), variant="primary")
 
             # ---- Step 2 ----
             gr.HTML("<hr>")
-            gr.Markdown("### Step 2｜1秒間動かして、実際に進む距離や回転角度を測定する")
-            with gr.Row("1秒間の動作"):
+            gr.Markdown(f"### {i18n('settings_step2')}")
+            with gr.Row(i18n("settings_1sec_operation")):
                 drive_forward_sec_button = gr.Button(
-                    "直進 ↑", variant="secondary", scale=0
+                    i18n("drive_forward"), variant="secondary", scale=0
                 )
                 drive_reverse_sec_button = gr.Button(
-                    "後進 ↓", variant="secondary", scale=0
+                    i18n("drive_reverse"), variant="secondary", scale=0
                 )
                 turn_left_sec_button = gr.Button(
-                    "左回転 ←", variant="secondary", scale=0
+                    i18n("turn_left"), variant="secondary", scale=0
                 )
                 turn_right_sec_button = gr.Button(
-                    "右回転 →", variant="secondary", scale=0
+                    i18n("turn_right"), variant="secondary", scale=0
                 )
 
             # ---- Step 3 ----
             gr.HTML("<hr>")
-            gr.Markdown("""### Step 3｜Step 2で測定した値を `実測：1秒で進む距離` と `実測：1秒で回転する角度` に入力して設定する
-⚠️ `直進速度` / `回転速度` を変える場合は、設定後にStep 2からやり直してください""")  # noqa: E501
+            gr.Markdown(f"### {i18n('settings_step3')}")
             with gr.Row():
                 with gr.Column():
                     # 直進に関する設定
                     cm_per_sec_input = gr.Number(
-                        label="実測: 1秒で進む距離（cm_per_sec）",
+                        label=i18n("cm_per_sec_label"),
                         placeholder=10,
                         interactive=True,
                     )
                     drive_speed_input = gr.Number(
-                        label="直進速度（drive_speed）",
+                        label=i18n("drive_speed_label"),
                         placeholder=20,
                         interactive=True,
                     )
@@ -277,20 +277,20 @@ def launch_gradio():
                 with gr.Column():
                     # 回転に関する設定
                     degree_per_sec_input = gr.Number(
-                        label="実測: 1秒で回転する角度（degree_per_sec）",
+                        label=i18n("degree_per_sec_label"),
                         placeholder=6 / 5,
                         interactive=True,
                     )
                     turn_speed_input = gr.Number(
-                        label="回転速度（turn_speed）", placeholder=80, interactive=True
+                        label=i18n("turn_speed_label"), placeholder=80, interactive=True
                     )
                 with gr.Column():
-                    settings_set_button = gr.Button("設定", variant="primary")
-                    settings_reset_button = gr.Button("リセット", variant="secondary")
+                    settings_set_button = gr.Button(i18n("settings_button"), variant="primary")
+                    settings_reset_button = gr.Button(i18n("reset_button"), variant="secondary")
             gr.HTML("<hr>")
-            gr.Markdown("### 出力結果")
+            gr.Markdown(f"### {i18n('output_result')}")
             with gr.Row():
-                settings_status_output = gr.Textbox(label="ステータス")
+                settings_status_output = gr.Textbox(label=i18n("status_output_label"))
 
             # クリックイベントの設定
             settings_get_button.click(
@@ -339,7 +339,7 @@ def launch_gradio():
                 handler_button_turn_right_sec, outputs=[settings_status_output]
             )
 
-    demo.launch(server_name="0.0.0.0", share=True)
+    demo.launch(server_name="0.0.0.0", share=True, i18n=i18n)
 
 
 def main():

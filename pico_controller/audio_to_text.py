@@ -8,7 +8,7 @@ from langsmith import traceable
 
 os.environ["SSL_CERT_FILE"] = certifi.where()
 
-print("Whisperモデルを読み込み中...")
+print("Loading Whisper model...")
 model_size = "tiny"
 model = WhisperModel(model_size, device="cpu", compute_type="float32")
 

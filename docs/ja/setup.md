@@ -40,9 +40,11 @@ LANGSMITH_PROJECT="pico-car"
 ```
 
 ## 🚜 Pico Carサーバの環境構築
-**PCなどのCPython環境でmockモードを使って動かす** 場合は、前述の「Pico Controllerサーバ」と同じvenvで動きます。
+**PCなどのCPython環境でmockモードを使って動かす場合:**
+前述の「Pico Controllerサーバ」と同じvenvで動きます。
 
-**Raspberry Pi Picoの車体キット上のMicroPythonで動かす** 場合は、次の手順を実施してください。
+**Raspberry Pi Picoの車体キット上のMicroPythonで動かす場合:**
+次の手順を実施してください。
 
 1. Kitronik社が公開しているキットのチュートリアルの手順にしたがってファイル等を配置し、キットが動く状態にします。
     - [Online Tutorial \- Autonomous Robotics Platform for Pico \- Using the Mo – Kitronik Ltd](https://kitronik.co.uk/blogs/resources/online-tutorial-autonomous-robotics-platform-for-pico-motors)

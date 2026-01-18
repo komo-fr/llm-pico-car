@@ -1,12 +1,12 @@
-langchain==0.3.21
-langchain-openai==0.3.11
-langchain-community==0.3.20
+langchain==1.2.6
+langchain-openai==1.1.7
+langchain-community==0.4.1
 python-dotenv==1.0.1
 httpx==0.27.2
 questionary==2.1.0
 black==25.1.0
 ruff==0.11.2
-langgraph==0.4.8
+langgraph==1.0.6
 pandas==2.2.3
 sentence-transformers==4.1.0
 torch==2.7.1

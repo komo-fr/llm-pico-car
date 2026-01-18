@@ -23,7 +23,7 @@ def transcribe(audio_file) -> tuple[bool, str]:
         return False, "無効な音声ファイルです"
 
     if isinstance(audio_file, str):
-        segments, _ = model.transcribe(audio_file, language="ja")
+        segments, _ = model.transcribe(audio_file, language=None)
     else:
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp_file:
             if hasattr(audio_file, "read"):
@@ -31,6 +31,6 @@ def transcribe(audio_file) -> tuple[bool, str]:
             else:
                 shutil.copy2(audio_file, tmp_file.name)
             tmp_path = tmp_file.name
-            segments, _ = model.transcribe(tmp_path, language="ja")
+            segments, _ = model.transcribe(tmp_path, language=None)
 
     return True, "".join([segment.text for segment in segments])

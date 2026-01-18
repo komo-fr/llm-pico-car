@@ -29,7 +29,7 @@ def image_to_command(img_bytes: bytes) -> List[Dict[str, str | int]]:
     ]
 
     # 実行
-    response = llm(messages)
+    response = llm.invoke(messages)
 
     instructions = response.content
     instructions = json.loads(instructions)

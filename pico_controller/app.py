@@ -219,7 +219,7 @@ def launch_gradio():
             with gr.Row():
                 image_input = gr.ImageEditor(
                     type="filepath",
-                    crop_size="1:1",
+                    canvas_size=(512, 512),
                     format="png",
                     brush=gr.Brush(colors=["black"], default_size=10),
                 )

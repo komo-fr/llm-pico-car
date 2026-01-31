@@ -17,6 +17,7 @@ Gradioで作ったUIから自然言語や画像で指示を入力し、LangChain
 
 | 日付 | イベント | 形式 | タイトル | 概要 | スライド | 動画 |
 |------|-------|--------|-------|----------|--------|-------|
+| 2026/1 | [PythonAsia Online Charity Talk H2](https://events.pythonasia.org/charity-talks-h2-2025/page/about/) | Talk(30min) | LLM Pico Car: How I Built a Voice-Controlled Toy Car Using Generative AI, Gradio, and Raspberry Pi Pico | - | [Slides](https://speakerdeck.com/komofr/python-asia-online-charity-talk-h2-llm-pico-car)(EN) | [Video](https://www.youtube.com/live/OXUJhvl2m7A?si=hh4R3fKawguU1EqA&t=4560)(1:16:00-) (EN) |
 | 2025/12 | [PyLadiesCon 2025](https://2025.conference.pyladies.com/en/) | Talk | “Go Straight, Then Turn Right!”: How I Built a Voice-Controlled Toy Car Using Generative AI, Gradio, and Raspberry Pi Pico | [Abstract](https://2025.conference.pyladies.com/en/session/go-straight-then-turn-right-how-i-built-a-voice-controlled-toy-car-using-generative-ai-gradio-and-raspberry-pi-pico/) | [Slides](https://speakerdeck.com/komofr/pyladiescon2025-llmpicocar)(日本語/英語) | [Video](https://www.youtube.com/watch?v=EJajIBGRfD0)(日本語発表/英語字幕) |
 | 2025/09 | [PyCon JP 2025](https://2025.pycon.jp/ja) | Poster | 「まっすぐ行って、右！」って言ってラズパイカーを動かしたい 〜生成AI × Raspberry Pi Pico × Gradioの試作メモ〜 | [Abstract](https://2025.pycon.jp/ja/timetable/talk/9CD3UW) | [Slides](https://speakerdeck.com/komofr/pyconjp2025-poster)(日本語) | - |
 
